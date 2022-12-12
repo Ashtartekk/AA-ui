@@ -1,12 +1,43 @@
 {
-  "name": "AA-ui",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "root",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "pnpm --filter aa-ui dev",
+    "docs:build": "pnpm --filter aa-ui predev -- prod && pnpm --filter aa-ui docs:build",
+    "lint": "pnpm run lint:script && pnpm run lint:style",
+    "lint:script": "eslint --ext \"packages/**/*.{vue,js,jsx,ts,tsx}\" --fix --quiet ./",
+    "lint:style": "stylelint --fix \"packages/**/*.{css,scss}\"",
+    "postinstall": "husky install"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@ls-lint/ls-lint": "^1.11.2",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "commitlint": "^17.0.3",
+    "eslint": "^7.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.6.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.6.2",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-recess-order": "^3.0.0",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-prettier": "^2.0.0"
+  },
+  "lint-staged": {
+    "packages/**/*.{vue,js,jsx,ts,tsx}": [
+      "npm run lint:script",
+      "git add ."
+    ],
+    "packages**/*.{css,scss}": [
+      "npm run lint:style",
+      "git add ."
+    ]
+  },
+  "license": "MIT"
 }
